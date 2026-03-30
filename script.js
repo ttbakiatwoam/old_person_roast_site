@@ -235,8 +235,8 @@ function getCandidatePhraseFiles() {
     candidates.push(withBase(`/${slug}.md`));
   }
 
-  // Next try: categorized phrases file (prefer over master if present)
-  candidates.push(withBase('/phrases_categorized.md'));
+  // // Next try: categorized phrases file (prefer over master if present)
+  // candidates.push(withBase('/phrases_categorized.md'));
   // Fallback master file
   candidates.push(withBase('/phrases.md'));
 
@@ -273,41 +273,73 @@ async function loadPhrases() {
       throw new Error('No phrase file found among candidates: ' + candidates.join(', '));
     }
     // build category view and flatten phrases for rendering
-    let categories = parseMarkdownByCategory(markdown);
+    // Parse the page-specific markdown (used for the playable phrase pool)
+    const pageCategories = parseMarkdownByCategory(markdown);
 
-    // If the file parsed into a single large "General" category, prefer a categorized fallback
-    if (Object.keys(categories).length === 1 && categories['General'] && categories['General'].length > 50) {
-      try {
-        const baseDir = (phraseFile || '').replace(/\/phrases\.md$/i, '').replace(/phrases\.md$/i, '');
-        const altFile = (baseDir ? baseDir : '') + '/phrases_categorized.md';
-        const altResp = await fetch(altFile, { cache: 'no-store' });
-        if (altResp.ok) {
-          const altMd = await altResp.text();
-          const altCats = parseMarkdownByCategory(altMd);
-          if (Object.keys(altCats).length > 1) {
-            categories = altCats;
-          }
-        }
-      } catch (e) {
-        // silently ignore fallback errors and use original categories
-        console.warn('Could not load phrases_categorized.md fallback:', e);
+    // Always prefer the repository's `phrases_categorized.md` for the catalog view when available.
+    // Use the page-specific markdown only for the per-page phrase pool and selection.
+    let categories = pageCategories; // default categories for display
+    try {
+      // compute repo base if phraseFile includes the repo path
+      const repoName = '/old_person_roast_site';
+      let repoBase = '';
+      if (phraseFile) {
+        const idx = phraseFile.indexOf(repoName);
+        if (idx !== -1) repoBase = phraseFile.slice(0, idx + repoName.length);
+        else if (phraseFile.startsWith(repoName)) repoBase = repoName;
+      } else {
+        const path = window.location.pathname || '';
+        const idx = path.indexOf(repoName);
+        if (idx !== -1) repoBase = path.slice(0, idx + repoName.length);
+        else if (path.startsWith(repoName)) repoBase = repoName;
       }
-    }
 
+      const candidates = [];
+      if (repoBase) candidates.push(repoBase + '/phrases_categorized.md');
+      candidates.push('/phrases_categorized.md');
+
+      for (const c of candidates) {
+        try {
+          const r = await fetch(c, { cache: 'no-store' });
+          if (r && r.ok) {
+            const md = await r.text();
+            const parsed = parseMarkdownByCategory(md);
+            if (Object.keys(parsed).length > 0) {
+              categories = parsed;
+              break;
+            }
+          }
+        } catch (e) {
+          // ignore and try next candidate
+        }
+      }
+    } catch (e) {
+      console.warn('Error while attempting to load phrases_categorized.md:', e);
+    }
     renderCategories(categories);
-    // flatten categories into phrases array (master list) and build phrase->category map
+
+    // flatten the PAGE categories into the playable phrases list (page-specific selection)
     phrases = [];
+    // build phrase->category map from the categorized file (for display). fallback to page categories
     phraseToCategory = {};
     Object.keys(categories).forEach((cat) => {
       categories[cat].forEach((p) => {
-        phrases.push(p);
         phraseToCategory[p] = cat;
+      });
+    });
+    // Ensure playable phrases come from the page's markdown (pageCategories)
+    Object.keys(pageCategories).forEach((cat) => {
+      pageCategories[cat].forEach((p) => {
+        phrases.push(p);
+        if (!phraseToCategory[p]) {
+          phraseToCategory[p] = cat;
+        }
       });
     });
 
     // detect index file and setup pool; chooseRandomPhrase will refill/populate dynamically
     const phraseFileLower = (phraseFile || '').toLowerCase();
-    isIndexPage = phraseFileLower.endsWith('/phrases.md') || phraseFileLower.endsWith('phrases.md');
+    isIndexPage = phraseFileLower.endsWith('/phrases.md') || phraseFileLower.endsWith('phrases.md') || phraseFileLower === '';
     phrasePool = isIndexPage ? [] : phrases.slice();
     chooseRandomPhrase();
 
