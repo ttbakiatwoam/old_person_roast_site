@@ -114,6 +114,8 @@ function speakPhrase() {
 
 function getPhraseFileFromPath() {
   const path = window.location.pathname;
+  const repoBaseMatch = path.match(/^(\/[^/]+)\/old_person_roast_site(?:\/|$)/);
+  const repoBase = repoBaseMatch ? repoBaseMatch[1] + '/old_person_roast_site' : (path.startsWith('/old_person_roast_site') ? '/old_person_roast_site' : '');
   // Handle root or /index.html or anything that looks like the site root
   if (
     path === '/' ||
@@ -122,7 +124,7 @@ function getPhraseFileFromPath() {
     /^\/old_person_roast_site\/?$/.test(path) ||
     /^\/old_person_roast_site\/index.html$/.test(path)
   ) {
-    return '/phrases.md';
+    return repoBase + '/phrases.md' || '/phrases.md';
   }
 
   // Handle /old_person_roast_site/username or /old_person_roast_site/username/index.html
@@ -130,17 +132,18 @@ function getPhraseFileFromPath() {
   if (subfolderMatch) {
     const user = subfolderMatch[1];
     if (user && user !== 'index.html') {
-      return `/${user}/${user}.md`;
+      return (repoBase || '') + `/${user}/${user}.md`;
     }
   }
 
   // fallback: for any other unknown path, return /phrases.md
-  return '/phrases.md';
+  return (repoBase || '') + '/phrases.md';
 }
 
 async function loadPhrases() {
   try {
     const phraseFile = getPhraseFileFromPath();
+    console.log('[DEBUG] Fetching phrase file:', phraseFile);
     const response = await fetch(phraseFile, { cache: 'no-store' });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
