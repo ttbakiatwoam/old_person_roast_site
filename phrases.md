@@ -12,7 +12,6 @@
 - You no longer trust chairs, mattresses, or sudden movements.
 - Your body has entered that exciting phase called constant inconvenience.
 - You have crossed into the era where comfort is your main athletic goal.
-- You have become weirdly aware of every floor, every chair, and every curb.
 - You are not old fashioned. You are just increasingly difficult to reboot.
 - Your body treats basic errands like a series of unfortunate events.
 - You are not over the hill. You are just taking it very slowly with handrails.
