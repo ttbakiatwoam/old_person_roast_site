@@ -111,9 +111,20 @@ function speakPhrase() {
   window.speechSynthesis.speak(utterance);
 }
 
+
+function getPhraseFileFromPath() {
+  const path = window.location.pathname.replace(/^\//, '').replace(/\/$/, '');
+  if (path && path !== 'index.html') {
+    // Only allow safe filenames
+    return path.replace(/[^a-zA-Z0-9_-]/g, '') + '.md';
+  }
+  return 'phrases.md';
+}
+
 async function loadPhrases() {
   try {
-    const response = await fetch('phrases.md', { cache: 'no-store' });
+    const phraseFile = getPhraseFileFromPath();
+    const response = await fetch(phraseFile, { cache: 'no-store' });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
@@ -128,9 +139,9 @@ async function loadPhrases() {
     }, 250);
   } catch (error) {
     console.error(error);
-    selectedPhrase = 'Could not load phrases.md';
+    selectedPhrase = 'Could not load phrases.';
     phraseDisplay.textContent = selectedPhrase;
-    setStatus('Make sure phrases.md is present beside index.html.');
+    setStatus('Make sure the phrase file exists.');
   }
 }
 
