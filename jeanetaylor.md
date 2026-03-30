@@ -1,0 +1,62 @@
+# Roast phrases for Jean E. Taylor
+
+- You are not old, but your body has filed several formal complaints.
+- At this point, standing up is less a movement and more a full negotiation.
+- You do not enter a room anymore. You arrive with sound effects.
+# - Your back goes out more often than you do.
+- You are living proof that wear and tear is a real lifestyle.
+# - You have reached the age where sitting down wrong becomes the whole day.
+# - Every time you bend over, your skeleton wants a written explanation.
+# - You are not slowing down on purpose. Your parts just disagree with each other.
+- Your knees now predict weather better than local news.
+- You make the same noise getting into a chair that old doors make in haunted houses.
+# - Time has not defeated you, but it has definitely roughed you up.
+- Your body now treats stairs like a personal insult.
+# - You are one awkward nap away from needing a recovery plan.
+- At your age, a sneeze is no longer a reflex. It is a physical gamble.
+# - You do not wake up refreshed. You wake up under protest.
+# - Your idea of cutting loose is taking both hands off the shopping cart.
+# - These days, getting comfortable is a temporary myth.
+# - You are not falling apart quickly, which somehow makes it feel more insulting.
+- Your body now has a startup sequence like an old lawn mower.
+# - Every morning begins with a full inventory of what hurts today.
+# - You have become the kind of person who can injure a shoulder while sleeping.
+# - You are still standing, which is impressive considering all the weird noises involved.
+# - At this age, your joints have opinions and they are all negative.
+- You no longer trust chairs, mattresses, or sudden movements.
+- Your body has entered that exciting phase called constant inconvenience.
+# - Nothing is actually broken, and yet nothing feels especially operational.
+# - You now prepare for simple tasks like they are minor construction projects.
+# - Your muscles retired years ago and forgot to tell the rest of you.
+# - You do not recover anymore. You just gradually become less damaged.
+# - At your age, reaching for something in the back seat counts as a risk.
+- You have crossed into the era where comfort is your main athletic goal.
+# - You are not fragile, but you are definitely assembled with less confidence than before.
+# - Your body now reacts to everyday life like it was not properly briefed.
+# - The main thing keeping you together is stubbornness and acceptable footwear.
+# - You have become weirdly aware of every floor, every chair, and every curb.
+- You are not old fashioned. You are just increasingly difficult to reboot.
+# - Even your resting position looks like a compromise.
+# - At this point, flexibility is mostly a memory and a warning.
+# - You now need a moment after doing absolutely nothing unusual.
+- Your body treats basic errands like a series of unfortunate events.
+- You are not over the hill. You are just taking it very slowly with handrails.
+- Every year adds wisdom, sure, but mostly it adds maintenance.
+- You have reached the stage where a mattress can ruin your week.
+# - Your joints now sound like a bowl of dry cereal being stirred with a wrench.
+# - You are still mobile, but only in the technical sense.
+# - Your body responds to ambition with stiffness and regret.
+- You do not spring out of bed anymore. You unfold with concern.
+# - At your age, even stretching feels a little confrontational.
+# - You have become your own before picture for discomfort.
+# - Your system still runs, but nobody would call it smooth.
+# - You now approach physical activity the way people approach suspicious leftovers.
+- Nothing says maturity like pulling a muscle while being careful.
+# - Your body has developed the reliability of an old appliance with sentimental value.
+# - You are not ancient, but your knees are definitely speaking an older language.
+# - These days, your posture depends heavily on mood and available seating.
+- You are one bad pillow away from a three-day recovery period.
+# - Your body no longer bounces back. It sends a strongly worded memo.
+# - You now understand why older people talk about surfaces so much.
+# - At this point, your main superpower is surviving minor discomfort indefinitely.
+# - You are not done yet, but the user manual is getting funnier every year.
