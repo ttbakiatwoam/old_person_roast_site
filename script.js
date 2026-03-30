@@ -114,8 +114,14 @@ function speakPhrase() {
 
 function getPhraseFileFromPath() {
   const path = window.location.pathname;
-  const repoBaseMatch = path.match(/^(\/[^/]+)\/old_person_roast_site(?:\/|$)/);
-  const repoBase = repoBaseMatch ? repoBaseMatch[1] + '/old_person_roast_site' : (path.startsWith('/old_person_roast_site') ? '/old_person_roast_site' : '');
+  const repoName = '/old_person_roast_site';
+  let repoBase = '';
+  const idx = path.indexOf(repoName);
+  if (idx !== -1) {
+    repoBase = path.slice(0, idx + repoName.length);
+  } else if (path.startsWith(repoName)) {
+    repoBase = repoName;
+  }
   // Handle root or /index.html or anything that looks like the site root
   if (
     path === '/' ||
