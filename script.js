@@ -139,7 +139,9 @@ async function loadPhrases() {
     }
 
     const markdown = await response.text();
+    console.log('[DEBUG] Loaded markdown:', markdown);
     phrases = parseMarkdownPhrases(markdown);
+    console.log('[DEBUG] Parsed phrases:', phrases);
     chooseRandomPhrase();
 
     setTimeout(() => {
