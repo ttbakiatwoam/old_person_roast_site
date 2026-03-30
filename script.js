@@ -124,14 +124,16 @@ function getPhraseFileFromPath() {
   ) {
     return '/phrases.md';
   }
-  // Handle /folder/ or /folder
-  const match = path.match(/^\/?([^/]+)\/?(index.html)?\/?$/);
-  if (match) {
-    const folder = match[1];
-    if (folder && folder !== 'index.html' && folder !== 'old_person_roast_site') {
-      return `/${folder}/${folder}.md`;
+
+  // Handle /old_person_roast_site/username or /old_person_roast_site/username/index.html
+  const subfolderMatch = path.match(/^\/old_person_roast_site\/([^/]+)(?:\/(index.html)?)?\/?$/);
+  if (subfolderMatch) {
+    const user = subfolderMatch[1];
+    if (user && user !== 'index.html') {
+      return `/${user}/${user}.md`;
     }
   }
+
   // fallback: for any other unknown path, return /phrases.md
   return '/phrases.md';
 }
