@@ -124,19 +124,7 @@ async function loadPhrases() {
 
     setTimeout(() => {
       loadVoices();
-      // Desktop: try speaking immediately (works on most desktop browsers)
       speakPhrase();
-      // Mobile: browsers block speech without a user gesture, so auto-speak
-      // on the first tap anywhere if it hasn't spoken yet
-      function speakOnFirstTouch() {
-        document.removeEventListener('touchstart', speakOnFirstTouch);
-        document.removeEventListener('click', speakOnFirstTouch);
-        if (window.speechSynthesis && !window.speechSynthesis.speaking) {
-          speakPhrase();
-        }
-      }
-      document.addEventListener('touchstart', speakOnFirstTouch, { once: true });
-      document.addEventListener('click', speakOnFirstTouch, { once: true });
     }, 250);
   } catch (error) {
     console.error(error);
