@@ -114,21 +114,26 @@ function speakPhrase() {
 
 function getPhraseFileFromPath() {
   const path = window.location.pathname;
-  // Handle root or /index.html
-  if (path === '/' || path === '/index.html' || path === '') {
+  // Handle root or /index.html or anything that looks like the site root
+  if (
+    path === '/' ||
+    path === '/index.html' ||
+    path === '' ||
+    /^\/old_person_roast_site\/?$/.test(path) ||
+    /^\/old_person_roast_site\/index.html$/.test(path)
+  ) {
     return '/phrases.md';
   }
   // Handle /folder/ or /folder
   const match = path.match(/^\/?([^/]+)\/?(index.html)?\/?$/);
   if (match) {
     const folder = match[1];
-    if (folder && folder !== 'index.html') {
+    if (folder && folder !== 'index.html' && folder !== 'old_person_roast_site') {
       return `/${folder}/${folder}.md`;
     }
   }
-  // fallback: just try the last part as a .md in the current folder
-  const parts = path.replace(/^\//, '').split('/');
-  return '/' + parts.join('/') + '.md';
+  // fallback: for any other unknown path, return /phrases.md
+  return '/phrases.md';
 }
 
 async function loadPhrases() {
