@@ -23,6 +23,46 @@ function parseMarkdownPhrases(markdown) {
     .filter((line) => line.length > 0);
 }
 
+function parseMarkdownByCategory(markdown) {
+  const lines = markdown.split(/\r?\n/);
+  const categories = {};
+  let current = 'General';
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (line.startsWith('## ')) {
+      current = line.replace(/^##\s*/, '').trim() || 'General';
+      categories[current] = categories[current] || [];
+      continue;
+    }
+    if (/^[-*+]\s+/.test(line)) {
+      categories[current] = categories[current] || [];
+      categories[current].push(line.replace(/^[-*+]\s+/, '').trim());
+    }
+  }
+  return categories;
+}
+
+function renderCategories(categories) {
+  const container = document.getElementById('phrasesList');
+  if (!container) return;
+  container.innerHTML = '';
+  Object.keys(categories).forEach((cat) => {
+    const details = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.textContent = `${cat} (${categories[cat].length})`;
+    details.appendChild(summary);
+    const ul = document.createElement('ul');
+    categories[cat].forEach((p) => {
+      const li = document.createElement('li');
+      li.textContent = p;
+      ul.appendChild(li);
+    });
+    details.appendChild(ul);
+    container.appendChild(details);
+  });
+}
+
 function chooseRandomPhrase() {
   if (!phrases.length) {
     selectedPhrase = 'No phrases were found in phrases.md';
@@ -155,8 +195,11 @@ async function loadPhrases() {
     }
 
     const markdown = await response.text();
-    phrases = parseMarkdownPhrases(markdown);
-    // phrases parsed
+    // build category view and flatten phrases for random selection
+    const categories = parseMarkdownByCategory(markdown);
+    renderCategories(categories);
+    // flatten categories into phrases array
+    phrases = Object.values(categories).flat();
     chooseRandomPhrase();
 
     setTimeout(() => {
@@ -170,6 +213,23 @@ async function loadPhrases() {
     setStatus('Make sure the phrase file exists.');
   }
 }
+
+// Purchase form handling: opens mail client with prefilled details for manual fulfillment.
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('purchaseForm');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const slug = document.getElementById('slug').value.trim();
+    const txn = document.getElementById('txn').value.trim();
+    const choices = document.getElementById('choices').value.trim();
+    const ownerEmail = 'youremail@example.com'; // TODO: replace with your real email
+    const subject = encodeURIComponent(`OldRoast purchase: ${slug}`);
+    const body = encodeURIComponent(`Slug: ${slug}\nPayPal TXN: ${txn}\nPhrases:\n${choices}`);
+    const mailto = `mailto:${ownerEmail}?subject=${subject}&body=${body}`;
+    window.location.href = mailto;
+  });
+});
 
 if ('speechSynthesis' in window) {
   loadVoices();

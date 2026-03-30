@@ -21,6 +21,34 @@
       <p id="status" class="status" aria-live="polite"></p>
     </section>
 
+    <section class="card">
+      <h2>Phrase Catalog</h2>
+      <p class="subtitle">Browse sayings by category.</p>
+      <div id="phrasesList"></div>
+    </section>
+
+    <section class="card">
+      <h2>Get a Custom URL</h2>
+      <p class="subtitle">Buy a custom page at oldroast.com/YOUR_CHOICE — $10 (one-time).</p>
+      <div class="actions">
+        <a class="button" href="https://www.paypal.me/YourPayPalName/10" target="_blank" rel="noopener">PayPal — $10</a>
+        <a class="button" href="https://www.buymeacoffee.com/YourName" target="_blank" rel="noopener">Buy Me A Coffee</a>
+      </div>
+      <p class="muted">After payment, please enter your desired slug, paste the PayPal transaction ID, and list up to 20 phrases (comma or newline separated). This will open an email to complete fulfillment.</p>
+      <form id="purchaseForm">
+        <label for="slug">Desired slug (alphanumeric, no spaces)</label>
+        <input id="slug" name="slug" type="text" required placeholder="jeanetaylor">
+
+        <label for="txn">PayPal Transaction ID</label>
+        <input id="txn" name="txn" type="text" required placeholder="PAYPAL_TXN_ID">
+
+        <label for="choices">Phrases (up to 20). Paste numbers or phrases, one per line.</label>
+        <textarea id="choices" name="choices" rows="6" placeholder="Paste up to 20 phrases or their numbers"></textarea>
+
+        <button type="submit">Send Purchase Request</button>
+      </form>
+    </section>
+
     <!-- Site info removed for production -->
   </main>
 
