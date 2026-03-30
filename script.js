@@ -114,11 +114,21 @@ function speakPhrase() {
 
 function getPhraseFileFromPath() {
   const path = window.location.pathname.replace(/^\//, '').replace(/\/$/, '');
-  if (path && path !== 'index.html') {
-    // Only allow safe filenames
-    return path.replace(/[^a-zA-Z0-9_-]/g, '') + '.md';
+  if (!path || path === 'index.html') {
+    return 'phrases.md';
   }
-  return 'phrases.md';
+  // If path is like 'jeanetaylor' or 'jeanetaylor/index.html', serve jeanetaylor/jeanetaylor.md
+  const parts = path.split('/');
+  if (parts.length === 1) {
+    // e.g. /jeanetaylor (should redirect to /jeanetaylor/ for GH Pages, but handle both)
+    return parts[0] + '/' + parts[0] + '.md';
+  }
+  if (parts.length === 2 && parts[1] === 'index.html') {
+    // e.g. /jeanetaylor/index.html
+    return parts[0] + '/' + parts[0] + '.md';
+  }
+  // fallback: just try the last part as a .md in the current folder
+  return parts.join('/') + '.md';
 }
 
 async function loadPhrases() {
