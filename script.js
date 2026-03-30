@@ -149,16 +149,14 @@ function getPhraseFileFromPath() {
 async function loadPhrases() {
   try {
     const phraseFile = getPhraseFileFromPath();
-    console.log('[DEBUG] Fetching phrase file:', phraseFile);
     const response = await fetch(phraseFile, { cache: 'no-store' });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
 
     const markdown = await response.text();
-    console.log('[DEBUG] Loaded markdown:', markdown);
     phrases = parseMarkdownPhrases(markdown);
-    console.log('[DEBUG] Parsed phrases:', phrases);
+    // phrases parsed
     chooseRandomPhrase();
 
     setTimeout(() => {
